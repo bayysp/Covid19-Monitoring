@@ -21,7 +21,14 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: MainPage(),
+      home: MultiProvider(
+        providers: [
+          ChangeNotifierProvider<GlobalProvider>(
+            create: (context) => GlobalProvider(),
+          )
+        ],
+        child: MainPage(),
+      ),
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case '/second':

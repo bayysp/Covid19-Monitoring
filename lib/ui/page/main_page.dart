@@ -29,9 +29,6 @@ class _MainPageState extends State<MainPage> {
     DateFormat f = DateFormat("yyyy-MM-dd HH:mm:ss");
     final nf = NumberFormat("#,###");
 
-    //declare provider
-    var global = Provider.of<GlobalProvider>(context).globalModel;
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFF001C4A),
@@ -59,9 +56,11 @@ class _MainPageState extends State<MainPage> {
                       Icons.timer,
                       color: Color(0xFF00B39B),
                     ),
-                    Text((global?.lastUpdate != null)
-                        ? f.format(global?.lastUpdate)
-                        : "-")
+                    Consumer<GlobalProvider>(
+                      builder:(context, globalProvider, _) => Text((globalProvider.globalModel?.lastUpdate != null)
+                          ? f.format(globalProvider?.globalModel.lastUpdate)
+                          : "-"),
+                    )
                   ],
                 ),
               )

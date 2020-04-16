@@ -13,6 +13,7 @@ class GlobalProvider with ChangeNotifier {
       notifyListeners();
       var result = globalModelFromJson(response.body);
       globalModel = result;
+      notifyListeners();
       return result;
     }else{
       return null;
