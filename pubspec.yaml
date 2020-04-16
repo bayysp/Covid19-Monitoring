@@ -27,6 +27,7 @@ dependencies:
   page_transition: ^1.1.5
   provider: ^4.0.4
   intl: ^0.16.1 #is use to date or number formatting
+  google_fonts: ^0.3.8
 
 dev_dependencies:
   flutter_test:
