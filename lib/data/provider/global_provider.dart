@@ -7,6 +7,8 @@ class GlobalProvider with ChangeNotifier {
   var api = ApiServices();
   GlobalModel globalModel;
 
+
+
   Future<GlobalModel> getGlobalProvider() async {
     final response = await api.client.get("${api.baseUrl}/api");
     if (response.statusCode == 200) {

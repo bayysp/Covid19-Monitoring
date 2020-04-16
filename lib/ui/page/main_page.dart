@@ -58,7 +58,7 @@ class _MainPageState extends State<MainPage> {
                     ),
                     Consumer<GlobalProvider>(
                       builder:(context, globalProvider, _) => Text((globalProvider.globalModel?.lastUpdate != null)
-                          ? f.format(globalProvider?.globalModel.lastUpdate)
+                          ? f.format(globalProvider.globalModel?.lastUpdate)
                           : "-"),
                     )
                   ],
