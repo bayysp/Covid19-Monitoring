@@ -1,4 +1,5 @@
 import 'package:covid19monitoring/data/provider/countries_provider.dart';
+import 'package:covid19monitoring/data/provider/country_detail_provider.dart';
 import 'package:covid19monitoring/data/provider/global_provider.dart';
 import 'package:covid19monitoring/ui/animation/page_transition.dart';
 import 'package:covid19monitoring/ui/page/detail_page.dart';
@@ -29,7 +30,10 @@ class _MyAppState extends State<MyApp> {
           ),
           ChangeNotifierProvider<CountriesProvider>(
             create: (context) => CountriesProvider(),
-          )
+          ),
+          ChangeNotifierProvider<CountryDetailProvider>(
+            create: (context) => CountryDetailProvider(),
+          ),
         ],
         child: MainPage(),
       ),

@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:covid19monitoring/data/provider/countries_provider.dart';
+import 'package:covid19monitoring/data/provider/country_detail_provider.dart';
 import 'package:covid19monitoring/data/provider/global_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -26,6 +27,8 @@ class _MainPageState extends State<MainPage> {
     //declare provider
     Provider.of<GlobalProvider>(context, listen: false).getGlobalProvider();
     Provider.of<CountriesProvider>(context, listen: false).getCountries();
+    Provider.of<CountryDetailProvider>(context, listen: false)
+        .getCountryDetail(_selectedLocation);
 
     setState(() {
       dateTime = fn.format(DateTime(now.year, now.month, now.day - 1));
@@ -184,11 +187,10 @@ class _MainPageState extends State<MainPage> {
                   Container(
                       margin: EdgeInsets.fromLTRB(0, 8, 0, 8),
                       width: MediaQuery.of(context).size.width / 1,
-                      height: 140,
+                      height: 160,
                       child: Consumer<CountriesProvider>(
                         builder: (context, countriesProvider, _) => Column(
                           children: <Widget>[
-
                             //dropdown widget with values of all countries
                             Container(
                               padding: EdgeInsets.only(
@@ -212,6 +214,9 @@ class _MainPageState extends State<MainPage> {
                                     setState(() {
                                       _selectedLocation = newValue;
                                     });
+
+                                    Provider.of<CountryDetailProvider>(context, listen: false)
+                                        .getCountryDetail(_selectedLocation);
                                   },
                                   items: countriesProvider
                                       .countriesModel?.countries
@@ -222,15 +227,24 @@ class _MainPageState extends State<MainPage> {
                             ),
 
                             //adding row for contries cases
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: <Widget>[
-                                Text("data 1"),
-                                Text("data 2"),
-                                Text("data 3"),
-                              ],
+                            Consumer<CountryDetailProvider>(
+                              builder: (context, countryDetailProvider, _) =>
+                                  Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: <Widget>[
+                                  Text(countryDetailProvider
+                                      .countryDetailModel.confirmed.value
+                                      .toString()),
+                                  Text(countryDetailProvider
+                                      .countryDetailModel.recovered.value
+                                      .toString()),
+                                  Text(countryDetailProvider
+                                      .countryDetailModel.deaths.value
+                                      .toString()),
+                                ],
+                              ),
                             )
-
                           ],
                         ),
                       ),
