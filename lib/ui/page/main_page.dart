@@ -36,152 +36,176 @@ class _MainPageState extends State<MainPage> {
     final nf = NumberFormat("#,###");
 
     return Scaffold(
-      backgroundColor: Color(0xFF00296B),
-      appBar: AppBar(
-        backgroundColor: Color(0xFF001C4A),
-        leading: Image.asset(
-          'assets/covid_icon.png',
-          fit: BoxFit.cover,
-          height: 20,
+        backgroundColor: Color(0xFF00296B),
+        appBar: AppBar(
+          backgroundColor: Color(0xFF001C4A),
+          leading: Image.asset(
+            'assets/covid_icon.png',
+            fit: BoxFit.cover,
+            height: 20,
+          ),
+          elevation: 12,
+          title: Text("COVID19",
+              style: GoogleFonts.rubik(
+                textStyle: TextStyle(fontWeight: FontWeight.w500),
+              )),
         ),
-        elevation: 12,
-        title: Text("COVID19",
-            style: GoogleFonts.rubik(
-              textStyle: TextStyle(fontWeight: FontWeight.w500),
-            )),
-      ),
-      body: Container(
-        margin: EdgeInsets.fromLTRB(12, 12, 12, 8),
-        child: ListView(
-          children: <Widget>[
-            Column(
-              children: <Widget>[
-                //FIRST CHILDREN -> lastUpdate data
-                Container(
-                  margin: EdgeInsets.fromLTRB(0, 0, 0, 8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Spacer(),
-                      Icon(
-                        Icons.timer,
-                        color: Color(0xFF00B39B),
-                      ),
-                      Consumer<GlobalProvider>(
-                        builder: (context, globalProvider, _) => Text(
-                          (globalProvider.globalModel?.lastUpdate != null)
-                              ? " Last Update at : "+f.format(globalProvider.globalModel?.lastUpdate)
-                              : "-",
-                          style: GoogleFonts.robotoSlab(
-                              textStyle: TextStyle(color: Colors.white)),
+        body: Container(
+          margin: EdgeInsets.fromLTRB(12, 12, 12, 8),
+          child: ListView(
+            children: <Widget>[
+              Column(
+                children: <Widget>[
+                  //FIRST CHILDREN -> lastUpdate data
+                  Container(
+                    margin: EdgeInsets.fromLTRB(0, 0, 0, 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Spacer(),
+                        Icon(
+                          Icons.timer,
+                          color: Color(0xFF00B39B),
                         ),
-                      )
-                    ],
-                  ),
-                ),
-
-                //SECOND CHILDREN -> Global Data
-                Consumer<GlobalProvider>(
-                  builder: (context, globalProvider, _) => Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      //global data value
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            "Confirmed",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                            ),
-                            textAlign: TextAlign.start,
-                          ),
-                          Text(
-                            (globalProvider.globalModel?.confirmed != null)
-                                ? nf
-                                    .format(globalProvider
-                                        .globalModel?.confirmed?.value)
-                                    .toString()
+                        Consumer<GlobalProvider>(
+                          builder: (context, globalProvider, _) => Text(
+                            (globalProvider.globalModel?.lastUpdate != null)
+                                ? " Last Update at : " +
+                                    f.format(
+                                        globalProvider.globalModel?.lastUpdate)
                                 : "-",
-                            style: TextStyle(
+                            style: GoogleFonts.robotoSlab(
+                                textStyle: TextStyle(color: Colors.white)),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+
+                  //SECOND CHILDREN -> Global Data
+                  Consumer<GlobalProvider>(
+                    builder: (context, globalProvider, _) => Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        //global data value
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              "Confirmed",
+                              style: TextStyle(
                                 color: Colors.white,
+                                fontSize: 20,
+                              ),
+                              textAlign: TextAlign.start,
+                            ),
+                            Text(
+                              (globalProvider.globalModel?.confirmed != null)
+                                  ? nf
+                                      .format(globalProvider
+                                          .globalModel?.confirmed?.value)
+                                      .toString()
+                                  : "-",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 28,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            Text(
+                              "Recovered",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                              ),
+                            ),
+                            Text(
+                              (globalProvider.globalModel?.recovered != null)
+                                  ? nf
+                                      .format(globalProvider
+                                          .globalModel?.recovered?.value)
+                                      .toString()
+                                  : "-",
+                              style: TextStyle(
+                                color: Colors.greenAccent,
                                 fontSize: 28,
-                                fontWeight: FontWeight.w700),
-                          ),
-                          Text(
-                            "Recovered",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
-                          ),
-                          Text(
-                            (globalProvider.globalModel?.recovered != null)
-                                ? nf
-                                    .format(globalProvider
-                                        .globalModel?.recovered?.value)
-                                    .toString()
-                                : "-",
-                            style: TextStyle(
-                              color: Colors.greenAccent,
-                              fontSize: 28,
-                              fontWeight: FontWeight.w700,
+                            Text(
+                              "Deaths",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                              ),
+                              textAlign: TextAlign.left,
                             ),
-                          ),
-                          Text(
-                            "Deaths",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
+                            Text(
+                              (globalProvider.globalModel?.deaths != null)
+                                  ? nf
+                                      .format(globalProvider
+                                          .globalModel?.deaths?.value)
+                                      .toString()
+                                  : "-",
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontSize: 28,
+                                fontWeight: FontWeight.w700,
+                              ),
+                              textAlign: TextAlign.start,
                             ),
-                            textAlign: TextAlign.left,
-                          ),
-                          Text(
-                            (globalProvider.globalModel?.deaths != null)
-                                ? nf
-                                    .format(globalProvider
-                                        .globalModel?.deaths?.value)
-                                    .toString()
-                                : "-",
-                            style: TextStyle(
-                              color: Colors.red,
-                              fontSize: 28,
-                              fontWeight: FontWeight.w700,
-                            ),
-                            textAlign: TextAlign.start,
-                          ),
-                        ],
-                      ),
-
-                      //for a pie chart
-                      PieChart(
-                        chartValueBackgroundColor: Colors.white,
-                        showLegends: false,
-                        animationDuration: Duration(milliseconds: 2000),
-                        dataMap: (globalProvider?.dataMap != null)
-                            ? globalProvider.dataMap
-                            : zeroMap(),
-                        chartRadius: MediaQuery.of(context).size.width / 2.7,
-                        colorList: [
-                          Colors.white,
-                          Colors.greenAccent,
-                          Colors.red
-                        ],
-                        chartType: ChartType.ring,
-                        chartValueStyle: defaultChartValueStyle.copyWith(
-                          color: Colors.white
+                          ],
                         ),
-                      ),
-                    ],
+
+                        //for a pie chart
+                        PieChart(
+                          chartValueBackgroundColor: Colors.white,
+                          showLegends: false,
+                          animationDuration: Duration(milliseconds: 2000),
+                          dataMap: (globalProvider?.dataMap != null)
+                              ? globalProvider.dataMap
+                              : zeroMap(),
+                          chartRadius: MediaQuery.of(context).size.width / 2.7,
+                          colorList: [
+                            Colors.white,
+                            Colors.greenAccent,
+                            Colors.red
+                          ],
+                          chartType: ChartType.ring,
+                          chartValueStyle: defaultChartValueStyle.copyWith(
+                              color: Colors.white),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
+
+                  //CardView for selected countries data
+                  Container(
+                    margin: EdgeInsets.fromLTRB(0, 8, 0, 8),
+                    width: MediaQuery.of(context).size.width / 1,
+                      height: 140,
+                      child: Column(
+                        children: <Widget>[
+
+                          //dropdown widget with values of all countries
+
+
+                        ],
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Color(0xFF69F0AE).withOpacity(0.8),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Color(0xFF69F0AE).withOpacity(0.3),
+                              blurRadius: 8.0,
+                              spreadRadius: 0.8)
+                        ],
+                      )),
+                ],
+              ),
+            ],
+          ),
+        ));
   }
 }
 
