@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:covid19monitoring/data/provider/countries_provider.dart';
 import 'package:covid19monitoring/data/provider/global_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,7 +16,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   String dateTime = '9-29-2020';
   DateFormat fn = DateFormat("M-dd-yyyy");
-  String _selectedLocation = "ID";
+  String _selectedLocation = "IDN";
 
   @override
   void initState() {
@@ -24,6 +25,7 @@ class _MainPageState extends State<MainPage> {
 
     //declare provider
     Provider.of<GlobalProvider>(context, listen: false).getGlobalProvider();
+    Provider.of<CountriesProvider>(context, listen: false).getCountries();
 
     setState(() {
       dateTime = fn.format(DateTime(now.year, now.month, now.day - 1));
@@ -180,16 +182,57 @@ class _MainPageState extends State<MainPage> {
 
                   //CardView for selected countries data
                   Container(
-                    margin: EdgeInsets.fromLTRB(0, 8, 0, 8),
-                    width: MediaQuery.of(context).size.width / 1,
+                      margin: EdgeInsets.fromLTRB(0, 8, 0, 8),
+                      width: MediaQuery.of(context).size.width / 1,
                       height: 140,
-                      child: Column(
-                        children: <Widget>[
+                      child: Consumer<CountriesProvider>(
+                        builder: (context, countriesProvider, _) => Column(
+                          children: <Widget>[
 
-                          //dropdown widget with values of all countries
+                            //dropdown widget with values of all countries
+                            Container(
+                              padding: EdgeInsets.only(
+                                  left: 12.0, right: 12, bottom: 4),
+                              child: DropdownButton<String>(
+                                  hint: Text("Choose Location"),
+                                  value: _selectedLocation,
+                                  isExpanded: true,
+                                  icon: Icon(
+                                    Icons.arrow_downward,
+                                    color: Color(0xFF001C4A),
+                                  ),
+                                  iconSize: 24,
+                                  elevation: 16,
+                                  style: TextStyle(color: Color(0xFF001C4A)),
+                                  underline: Container(
+                                    height: 2,
+                                    color: Color(0xFF001C4A),
+                                  ),
+                                  onChanged: (String newValue) {
+                                    setState(() {
+                                      _selectedLocation = newValue;
+                                    });
+                                  },
+                                  items: countriesProvider
+                                      .countriesModel?.countries
+                                      ?.map((val) => DropdownMenuItem(
+                                          value: val.iso3,
+                                          child: Text(val.name)))
+                                      ?.toList()),
+                            ),
 
+                            //adding row for contries cases
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: <Widget>[
+                                Text("data 1"),
+                                Text("data 2"),
+                                Text("data 3"),
+                              ],
+                            )
 
-                        ],
+                          ],
+                        ),
                       ),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
