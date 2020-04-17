@@ -94,7 +94,7 @@ class _MainPageState extends State<MainPage> {
                         textAlign: TextAlign.start,
                       ),
                       Text(
-                        globalProvider.globalModel.confirmed.value.toString(),
+                        nf.format(globalProvider.globalModel.confirmed.value).toString() ?? '-',
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 28,
@@ -108,7 +108,7 @@ class _MainPageState extends State<MainPage> {
                         ),
                       ),
                       Text(
-                        globalProvider.globalModel.recovered.value.toString(),
+                        nf.format(globalProvider.globalModel.recovered.value).toString() ?? '-',
                         style: TextStyle(
                             color: Colors.greenAccent,
                             fontSize: 28,
@@ -124,7 +124,7 @@ class _MainPageState extends State<MainPage> {
                         textAlign: TextAlign.left,
                       ),
                       Text(
-                        globalProvider.globalModel.deaths.value.toString(),
+                        nf.format(globalProvider.globalModel.deaths.value).toString() ?? '-',
                         style: TextStyle(
                           color: Colors.red,
                           fontSize: 28,
