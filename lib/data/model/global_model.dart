@@ -78,6 +78,7 @@ class Confirmed {
         "value": value,
         "detail": detail,
     };
+
 }
 
 class CountryDetail {

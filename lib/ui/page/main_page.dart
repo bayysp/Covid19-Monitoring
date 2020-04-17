@@ -4,6 +4,7 @@ import 'package:covid19monitoring/data/provider/global_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:pie_chart/pie_chart.dart';
 import 'package:provider/provider.dart';
 
 class MainPage extends StatefulWidget {
@@ -51,95 +52,143 @@ class _MainPageState extends State<MainPage> {
       ),
       body: Container(
         margin: EdgeInsets.fromLTRB(12, 12, 12, 8),
-        child: Column(
+        child: ListView(
           children: <Widget>[
-
-            //FIRST CHILDREN -> lastUpdate data
-            Container(
-              margin: EdgeInsets.fromLTRB(0, 0, 0, 4),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Spacer(),
-                  Icon(
-                    Icons.timer,
-                    color: Color(0xFF00B39B),
-                  ),
-                  Consumer<GlobalProvider>(
-                    builder: (context, globalProvider, _) => Text(
-                      (globalProvider.globalModel?.lastUpdate != null)
-                          ? f.format(globalProvider.globalModel?.lastUpdate)
-                          : "-",
-                      style: GoogleFonts.robotoSlab(
-                          textStyle: TextStyle(color: Colors.white)),
-                    ),
-                  )
-                ],
-              ),
-            ),
-
-            //SECOND CHILDREN -> Global Data
-            Consumer<GlobalProvider>(
-              builder: (context, globalProvider, _) => Row(
-                children: <Widget>[
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+            Column(
+              children: <Widget>[
+                //FIRST CHILDREN -> lastUpdate data
+                Container(
+                  margin: EdgeInsets.fromLTRB(0, 0, 0, 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Text(
-                        "Confirmed",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
+                      Spacer(),
+                      Icon(
+                        Icons.timer,
+                        color: Color(0xFF00B39B),
+                      ),
+                      Consumer<GlobalProvider>(
+                        builder: (context, globalProvider, _) => Text(
+                          (globalProvider.globalModel?.lastUpdate != null)
+                              ? " Last Update at : "+f.format(globalProvider.globalModel?.lastUpdate)
+                              : "-",
+                          style: GoogleFonts.robotoSlab(
+                              textStyle: TextStyle(color: Colors.white)),
                         ),
-                        textAlign: TextAlign.start,
-                      ),
-                      Text(
-                        nf.format(globalProvider.globalModel.confirmed.value).toString() ?? '-',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 28,
-                            fontWeight: FontWeight.w700),
-                      ),
-                      Text(
-                        "Recovered",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                        ),
-                      ),
-                      Text(
-                        nf.format(globalProvider.globalModel.recovered.value).toString() ?? '-',
-                        style: TextStyle(
-                            color: Colors.greenAccent,
-                            fontSize: 28,
-                            fontWeight: FontWeight.w700,),
+                      )
+                    ],
+                  ),
+                ),
 
+                //SECOND CHILDREN -> Global Data
+                Consumer<GlobalProvider>(
+                  builder: (context, globalProvider, _) => Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      //global data value
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "Confirmed",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                            ),
+                            textAlign: TextAlign.start,
+                          ),
+                          Text(
+                            (globalProvider.globalModel?.confirmed != null)
+                                ? nf
+                                    .format(globalProvider
+                                        .globalModel?.confirmed?.value)
+                                    .toString()
+                                : "-",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 28,
+                                fontWeight: FontWeight.w700),
+                          ),
+                          Text(
+                            "Recovered",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                            ),
+                          ),
+                          Text(
+                            (globalProvider.globalModel?.recovered != null)
+                                ? nf
+                                    .format(globalProvider
+                                        .globalModel?.recovered?.value)
+                                    .toString()
+                                : "-",
+                            style: TextStyle(
+                              color: Colors.greenAccent,
+                              fontSize: 28,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          Text(
+                            "Deaths",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+                          Text(
+                            (globalProvider.globalModel?.deaths != null)
+                                ? nf
+                                    .format(globalProvider
+                                        .globalModel?.deaths?.value)
+                                    .toString()
+                                : "-",
+                            style: TextStyle(
+                              color: Colors.red,
+                              fontSize: 28,
+                              fontWeight: FontWeight.w700,
+                            ),
+                            textAlign: TextAlign.start,
+                          ),
+                        ],
                       ),
-                      Text(
-                        "Deaths",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
+
+                      //for a pie chart
+                      PieChart(
+                        chartValueBackgroundColor: Colors.white,
+                        showLegends: false,
+                        animationDuration: Duration(milliseconds: 2000),
+                        dataMap: (globalProvider?.dataMap != null)
+                            ? globalProvider.dataMap
+                            : zeroMap(),
+                        chartRadius: MediaQuery.of(context).size.width / 2.7,
+                        colorList: [
+                          Colors.white,
+                          Colors.greenAccent,
+                          Colors.red
+                        ],
+                        chartType: ChartType.ring,
+                        chartValueStyle: defaultChartValueStyle.copyWith(
+                          color: Colors.white
                         ),
-                        textAlign: TextAlign.left,
-                      ),
-                      Text(
-                        nf.format(globalProvider.globalModel.deaths.value).toString() ?? '-',
-                        style: TextStyle(
-                          color: Colors.red,
-                          fontSize: 28,
-                          fontWeight: FontWeight.w700,
-                        ),
-                        textAlign: TextAlign.start,
                       ),
                     ],
-                  )
-                ],
-              ),
-            )
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
     );
   }
+}
+
+Map<String, double> zeroMap() {
+  Map<String, double> res = Map();
+  res.putIfAbsent("Confirmed", () => 1);
+  res.putIfAbsent("Recovered", () => 1);
+  res.putIfAbsent("Deaths", () => 1);
+  return res;
 }
