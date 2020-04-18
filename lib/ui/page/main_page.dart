@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:covid19monitoring/data/provider/countries_provider.dart';
 import 'package:covid19monitoring/data/provider/country_detail_provider.dart';
 import 'package:covid19monitoring/data/provider/global_provider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -194,7 +195,7 @@ class _MainPageState extends State<MainPage> {
                             //dropdown widget with values of all countries
                             Container(
                               padding: EdgeInsets.only(
-                                  left: 12.0, right: 12, bottom: 4),
+                                  left: 12.0, right: 12, bottom: 8),
                               child: DropdownButton<String>(
                                   hint: Text("Choose Location"),
                                   value: _selectedLocation,
@@ -205,7 +206,7 @@ class _MainPageState extends State<MainPage> {
                                   ),
                                   iconSize: 24,
                                   elevation: 16,
-                                  style: TextStyle(color: Color(0xFF001C4A)),
+                                  style: TextStyle(color: Colors.greenAccent),
                                   underline: Container(
                                     height: 2,
                                     color: Color(0xFF001C4A),
@@ -215,14 +216,20 @@ class _MainPageState extends State<MainPage> {
                                       _selectedLocation = newValue;
                                     });
 
-                                    Provider.of<CountryDetailProvider>(context, listen: false)
+                                    Provider.of<CountryDetailProvider>(context,
+                                            listen: false)
                                         .getCountryDetail(_selectedLocation);
                                   },
                                   items: countriesProvider
                                       .countriesModel?.countries
                                       ?.map((val) => DropdownMenuItem(
                                           value: val.iso3,
-                                          child: Text(val.name)))
+                                          child: Text(
+                                            val.name,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 18),
+                                          )))
                                       ?.toList()),
                             ),
 
@@ -233,15 +240,74 @@ class _MainPageState extends State<MainPage> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
                                 children: <Widget>[
-                                  Text(countryDetailProvider
-                                      .countryDetailModel.confirmed.value
-                                      .toString()),
-                                  Text(countryDetailProvider
-                                      .countryDetailModel.recovered.value
-                                      .toString()),
-                                  Text(countryDetailProvider
-                                      .countryDetailModel.deaths.value
-                                      .toString()),
+                                  Column(
+                                    children: <Widget>[
+                                      Container(
+                                        child: Text(
+                                          "Confirmed",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 18,
+                                              color: Colors.white),
+                                        ),
+                                        margin: EdgeInsets.only(bottom: 16),
+                                      ),
+                                      Text(
+                                          countryDetailProvider
+                                              .countryDetailModel
+                                              .confirmed
+                                              .value
+                                              .toString(),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w900,
+                                              fontSize: 22, color: Colors.white),),
+                                    ],
+                                  ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Container(
+                                        child: Text(
+                                          "Recovered",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 18,
+                                              color: Colors.white),
+                                        ),
+                                        margin: EdgeInsets.only(bottom: 16),
+                                      ),
+                                      Text(
+                                          countryDetailProvider
+                                              .countryDetailModel
+                                              .recovered
+                                              .value
+                                              .toString(),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w900,
+                                              fontSize: 22, color: Colors.greenAccent)),
+                                    ],
+                                  ),
+                                  Column(
+                                    children: <Widget>[
+                                      Container(
+                                        child: Text(
+                                          "Deaths",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 18,
+                                              color: Colors.white),
+                                        ),
+                                        margin: EdgeInsets.only(bottom: 16),
+                                      ),
+                                      Text(
+                                          countryDetailProvider
+                                              .countryDetailModel.deaths.value
+                                              .toString(),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 22, color: Colors.red)),
+                                    ],
+                                  )
                                 ],
                               ),
                             )
@@ -250,10 +316,10 @@ class _MainPageState extends State<MainPage> {
                       ),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: Color(0xFF69F0AE).withOpacity(0.8),
+                        color: Color(0xFF69F0AE).withOpacity(0.3),
                         boxShadow: [
                           BoxShadow(
-                              color: Color(0xFF69F0AE).withOpacity(0.3),
+                              color: Color(0xFF69F0AE).withOpacity(0.2),
                               blurRadius: 8.0,
                               spreadRadius: 0.8)
                         ],
