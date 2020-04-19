@@ -188,9 +188,9 @@ class _MainPageState extends State<MainPage> {
                   Container(
                       margin: EdgeInsets.fromLTRB(0, 8, 0, 8),
                       width: MediaQuery.of(context).size.width / 1,
-                      height: 160,
                       child: Consumer<CountriesProvider>(
                         builder: (context, countriesProvider, _) => Column(
+                          mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
                             //dropdown widget with values of all countries
                             Container(
@@ -201,7 +201,7 @@ class _MainPageState extends State<MainPage> {
                                   value: _selectedLocation,
                                   isExpanded: true,
                                   icon: Icon(
-                                    Icons.arrow_downward,
+                                    Icons.details,
                                     color: Color(0xFF001C4A),
                                   ),
                                   iconSize: 24,
@@ -331,6 +331,26 @@ class _MainPageState extends State<MainPage> {
                               ),
                             ),
 
+                            // ADDING BUTTON FOR DETAIL COUNTRIES INFORMATION
+                            Container(
+                              margin: EdgeInsets.fromLTRB(0, 4, 0, 4),
+                              child: Consumer<CountryDetailProvider>(
+                                builder: (context, countryDetailProvider, _) =>
+                                    (countryDetailProvider.countryDetailModel != null)
+                                        ? OutlineButton(
+                                            onPressed: () {},
+                                            color: Colors.greenAccent,
+                                            disabledBorderColor: Colors.grey,
+                                            highlightedBorderColor:
+                                                Colors.greenAccent,
+                                            disabledTextColor: Colors.grey,
+                                            textColor: Colors.greenAccent,
+                                            child: Text("More Detail"),
+                                          )
+                                        : OutlineButton(onPressed: null,
+                                    child: Text("No Data"),),
+                              ),
+                            )
                           ],
                         ),
                       ),
