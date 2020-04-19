@@ -253,18 +253,25 @@ class _MainPageState extends State<MainPage> {
                                         margin: EdgeInsets.only(bottom: 16),
                                       ),
                                       Text(
-                                          countryDetailProvider
-                                              .countryDetailModel
-                                              .confirmed
-                                              .value
-                                              .toString(),
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w900,
-                                              fontSize: 22, color: Colors.white),),
+                                        (countryDetailProvider
+                                                    .countryDetailModel !=
+                                                null)
+                                            ? countryDetailProvider
+                                                .countryDetailModel
+                                                .confirmed
+                                                .value
+                                                .toString()
+                                            : "-",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w900,
+                                            fontSize: 22,
+                                            color: Colors.white),
+                                      ),
                                     ],
                                   ),
                                   Column(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
                                       Container(
                                         child: Text(
@@ -277,14 +284,19 @@ class _MainPageState extends State<MainPage> {
                                         margin: EdgeInsets.only(bottom: 16),
                                       ),
                                       Text(
-                                          countryDetailProvider
-                                              .countryDetailModel
-                                              .recovered
-                                              .value
-                                              .toString(),
+                                          (countryDetailProvider
+                                                      .countryDetailModel !=
+                                                  null)
+                                              ? countryDetailProvider
+                                                  .countryDetailModel
+                                                  .recovered
+                                                  .value
+                                                  .toString()
+                                              : "-",
                                           style: TextStyle(
                                               fontWeight: FontWeight.w900,
-                                              fontSize: 22, color: Colors.greenAccent)),
+                                              fontSize: 22,
+                                              color: Colors.greenAccent)),
                                     ],
                                   ),
                                   Column(
@@ -300,17 +312,25 @@ class _MainPageState extends State<MainPage> {
                                         margin: EdgeInsets.only(bottom: 16),
                                       ),
                                       Text(
-                                          countryDetailProvider
-                                              .countryDetailModel.deaths.value
-                                              .toString(),
+                                          (countryDetailProvider
+                                                      .countryDetailModel !=
+                                                  null)
+                                              ? countryDetailProvider
+                                                  .countryDetailModel
+                                                  .deaths
+                                                  .value
+                                                  .toString()
+                                              : "-",
                                           style: TextStyle(
                                               fontWeight: FontWeight.w700,
-                                              fontSize: 22, color: Colors.red)),
+                                              fontSize: 22,
+                                              color: Colors.red)),
                                     ],
                                   )
                                 ],
                               ),
-                            )
+                            ),
+
                           ],
                         ),
                       ),
