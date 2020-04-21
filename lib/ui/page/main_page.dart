@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:covid19monitoring/data/provider/countries_provider.dart';
 import 'package:covid19monitoring/data/provider/country_detail_provider.dart';
 import 'package:covid19monitoring/data/provider/global_provider.dart';
+import 'package:covid19monitoring/ui/animation/page_transition.dart';
+import 'package:covid19monitoring/ui/page/detail_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -338,7 +340,16 @@ class _MainPageState extends State<MainPage> {
                                 builder: (context, countryDetailProvider, _) =>
                                     (countryDetailProvider.countryDetailModel != null)
                                         ? OutlineButton(
-                                            onPressed: () {},
+
+                                            onPressed: () {
+                                              Navigator.push(context, PageTransition(
+                                                alignment: Alignment.bottomCenter,
+                                                curve: Curves.bounceOut,
+                                                type: PageTransitionType.upToDown,
+                                                
+                                                child: DetailPage(selectedLocation : _selectedLocation)
+                                              ));
+                                            },
                                             color: Colors.greenAccent,
                                             disabledBorderColor: Colors.grey,
                                             highlightedBorderColor:
