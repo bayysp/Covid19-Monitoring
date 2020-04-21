@@ -1,7 +1,6 @@
 import 'package:covid19monitoring/data/model/global_model.dart';
 import 'package:covid19monitoring/data/service/api_services.dart';
 import 'package:flutter/material.dart';
-import 'dart:convert';
 
 class GlobalProvider with ChangeNotifier {
   var api = ApiServices();

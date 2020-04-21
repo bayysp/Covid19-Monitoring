@@ -8,11 +8,19 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(MultiProvider(
-  providers: [
-    ChangeNotifierProvider(create: (_) => GlobalProvider()),
-  ],
-  child: MyApp(),
-));
+      providers: [
+        ChangeNotifierProvider<GlobalProvider>(
+          create: (context) => GlobalProvider(),
+        ),
+        ChangeNotifierProvider<CountriesProvider>(
+          create: (context) => CountriesProvider(),
+        ),
+        ChangeNotifierProvider<CountryDetailProvider>(
+          create: (context) => CountryDetailProvider(),
+        ),
+      ],
+      child: MyApp(),
+    ));
 
 class MyApp extends StatefulWidget {
   @override
@@ -23,20 +31,8 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: MultiProvider(
-        providers: [
-          ChangeNotifierProvider<GlobalProvider>(
-            create: (context) => GlobalProvider(),
-          ),
-          ChangeNotifierProvider<CountriesProvider>(
-            create: (context) => CountriesProvider(),
-          ),
-          ChangeNotifierProvider<CountryDetailProvider>(
-            create: (context) => CountryDetailProvider(),
-          ),
-        ],
-        child: MainPage(),
-      ),
+      home: MainPage(),
+      
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case '/second':
