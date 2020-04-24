@@ -14,6 +14,8 @@ class CountriesProvider with ChangeNotifier{
     if(response.statusCode == 200){
       var result = countriesModelFromJson(response.body);
 
+      
+
       countriesModel = result;
       notifyListeners();
       return result;
